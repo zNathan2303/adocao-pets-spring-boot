@@ -14,6 +14,18 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(AdotanteNaoEncontradoException.class)
+    private ResponseEntity<DefaultErrorResponse> adotanteNaoEncontradaHandler() {
+
+        DefaultErrorResponse error = new DefaultErrorResponse(
+                404,
+                "Not Found",
+                "Adotante não encontrado!",
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(404).body(error);
+    }
+
     @ExceptionHandler(OngNaoEncontradaException.class)
     private ResponseEntity<DefaultErrorResponse> ongNaoEncontradaHandler() {
 
