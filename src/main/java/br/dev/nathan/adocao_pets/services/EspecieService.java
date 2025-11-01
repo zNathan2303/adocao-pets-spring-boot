@@ -2,6 +2,7 @@ package br.dev.nathan.adocao_pets.services;
 
 import br.dev.nathan.adocao_pets.dtos.EspecieDTO;
 import br.dev.nathan.adocao_pets.entities.EspecieEntity;
+import br.dev.nathan.adocao_pets.exceptions.EspecieNaoEncontradaException;
 import br.dev.nathan.adocao_pets.repositories.EspecieRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class EspecieService {
     }
 
     public EspecieDTO buscarPorId(Integer id) {
-        return new EspecieDTO(repository.findById(id).orElseThrow());
+        return new EspecieDTO(repository.findById(id).orElseThrow(() -> new EspecieNaoEncontradaException()));
     }
     
     public void inserir(EspecieDTO dto) {
@@ -29,13 +30,20 @@ public class EspecieService {
     }
 
     public void atualizar(EspecieDTO dto, Integer id) {
-        EspecieEntity entity = new EspecieEntity(dto);
-        entity.setId(id);
-        repository.save(entity);
+        if (repository.existsById(id)) {
+            EspecieEntity entity = new EspecieEntity(dto);
+            entity.setId(id);
+            repository.save(entity);
+        } else {
+            throw new EspecieNaoEncontradaException();
+        }
     }
 
     public void excluirPorId(Integer id) {
-        repository.deleteById(id);
+        if (repository.existsById(id))
+            repository.deleteById(id);
+        else
+            throw new EspecieNaoEncontradaException();
     }
 
 }

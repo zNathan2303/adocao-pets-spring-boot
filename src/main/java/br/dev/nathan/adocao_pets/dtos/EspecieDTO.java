@@ -1,6 +1,8 @@
 package br.dev.nathan.adocao_pets.dtos;
 
 import br.dev.nathan.adocao_pets.entities.EspecieEntity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 
@@ -12,6 +14,9 @@ import org.springframework.beans.BeanUtils;
 public class EspecieDTO {
 
     private Integer id;
+
+    @NotBlank(message = "Nome inválido!")
+    @Size(max = 50, message = "O nome pode ter no máximo 50 caracteres!")
     private String nome;
 
     public EspecieDTO(EspecieEntity entity) {
