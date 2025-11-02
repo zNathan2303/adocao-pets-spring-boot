@@ -17,14 +17,15 @@ public class EnderecoOngService {
     private final EnderecoOngRepository enderecoOngRepository;
     private final OngRepository ongRepository;
 
-    public EnderecoOngService(EnderecoOngRepository enderecoOngRepository, OngRepository ongRepository) {
+    public EnderecoOngService(EnderecoOngRepository enderecoOngRepository,
+                              OngRepository ongRepository) {
         this.enderecoOngRepository = enderecoOngRepository;
         this.ongRepository = ongRepository;
     }
 
     private EnderecoOngEntity transformarDTOEmEntity (EnderecoOngDTO dto) {
         OngEntity ong = ongRepository.findById(dto.getIdOng())
-                .orElseThrow(() -> new OngInexistenteException());
+            .orElseThrow(() -> new OngInexistenteException());
 
         return new EnderecoOngEntity(
             dto.getId(),
@@ -39,12 +40,17 @@ public class EnderecoOngService {
     }
 
     public List<EnderecoOngDTO> listarTudo() {
-        return enderecoOngRepository.findAll().stream().map(x -> new EnderecoOngDTO(x)).toList();
+        return enderecoOngRepository.findAll()
+            .stream()
+            .map(x -> new EnderecoOngDTO(x))
+            .toList();
     }
 
     public EnderecoOngDTO buscarPorId(Integer id) {
-        return new EnderecoOngDTO(enderecoOngRepository.findById(id)
-            .orElseThrow(() -> new EnderecoOngNaoEncontradoException()));
+        return new EnderecoOngDTO(
+            enderecoOngRepository.findById(id)
+                .orElseThrow(() -> new EnderecoOngNaoEncontradoException())
+        );
     }
 
     public void inserir(EnderecoOngDTO dto) {

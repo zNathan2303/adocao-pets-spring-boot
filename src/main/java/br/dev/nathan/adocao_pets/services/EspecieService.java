@@ -18,11 +18,17 @@ public class EspecieService {
     }
 
     public List<EspecieDTO> listarTudo() {
-        return repository.findAll().stream().map(x -> new EspecieDTO(x)).toList();
+        return repository.findAll()
+            .stream()
+            .map(x -> new EspecieDTO(x))
+            .toList();
     }
 
     public EspecieDTO buscarPorId(Integer id) {
-        return new EspecieDTO(repository.findById(id).orElseThrow(() -> new EspecieNaoEncontradaException()));
+        return new EspecieDTO(
+            repository.findById(id)
+                .orElseThrow(() -> new EspecieNaoEncontradaException())
+        );
     }
     
     public void inserir(EspecieDTO dto) {

@@ -25,7 +25,7 @@ public class RacaService {
     private RacaEntity transformarDTOEmEntity(RacaDTO dto) {
 
         EspecieEntity especie = especieRepository.findById(dto.getIdEspecie())
-                .orElseThrow(() -> new EspecieInexistenteException());
+            .orElseThrow(() -> new EspecieInexistenteException());
 
         System.out.println(especie);
 
@@ -37,11 +37,17 @@ public class RacaService {
     }
 
     public List<RacaDTO> listarTudo() {
-        return racaRepository.findAll().stream().map(x -> new RacaDTO(x)).toList();
+        return racaRepository.findAll()
+            .stream()
+            .map(x -> new RacaDTO(x))
+            .toList();
     }
 
     public RacaDTO buscarPorId(Integer id) {
-        return new RacaDTO(racaRepository.findById(id).orElseThrow(() -> new RacaNaoEncontradaException()));
+        return new RacaDTO(
+            racaRepository.findById(id)
+                .orElseThrow(() -> new RacaNaoEncontradaException())
+        );
     }
 
     public void inserir(RacaDTO dto) {

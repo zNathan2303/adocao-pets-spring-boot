@@ -1,7 +1,6 @@
 package br.dev.nathan.adocao_pets.services;
 
 import br.dev.nathan.adocao_pets.dtos.AdotanteDTO;
-import br.dev.nathan.adocao_pets.dtos.OngDTO;
 import br.dev.nathan.adocao_pets.entities.AdotanteEntity;
 import br.dev.nathan.adocao_pets.exceptions.AdotanteNaoEncontradoException;
 import br.dev.nathan.adocao_pets.repositories.AdotanteRepository;
@@ -19,11 +18,17 @@ public class AdotanteService {
     }
 
     public List<AdotanteDTO> listarTudo() {
-        return repository.findAll().stream().map(x -> new AdotanteDTO(x)).toList();
+        return repository.findAll()
+            .stream()
+            .map(x -> new AdotanteDTO(x))
+            .toList();
     }
 
     public AdotanteDTO buscarPorId(Integer id) {
-        return new AdotanteDTO(repository.findById(id).orElseThrow(() -> new AdotanteNaoEncontradoException()));
+        return new AdotanteDTO(
+            repository.findById(id)
+                .orElseThrow(() -> new AdotanteNaoEncontradoException())
+        );
     }
 
     public void inserir(AdotanteDTO dto) {

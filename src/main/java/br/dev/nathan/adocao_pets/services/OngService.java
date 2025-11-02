@@ -2,7 +2,6 @@ package br.dev.nathan.adocao_pets.services;
 
 import br.dev.nathan.adocao_pets.dtos.OngDTO;
 import br.dev.nathan.adocao_pets.entities.OngEntity;
-import br.dev.nathan.adocao_pets.exceptions.EspecieNaoEncontradaException;
 import br.dev.nathan.adocao_pets.exceptions.OngNaoEncontradaException;
 import br.dev.nathan.adocao_pets.repositories.OngRepository;
 import org.springframework.stereotype.Service;
@@ -19,11 +18,17 @@ public class OngService {
     }
 
     public List<OngDTO> listarTudo() {
-        return repository.findAll().stream().map(x -> new OngDTO(x)).toList();
+        return repository.findAll()
+            .stream()
+            .map(x -> new OngDTO(x))
+            .toList();
     }
 
     public OngDTO buscarPorId(Integer id) {
-        return new OngDTO(repository.findById(id).orElseThrow(() -> new OngNaoEncontradaException()));
+        return new OngDTO(
+            repository.findById(id)
+                .orElseThrow(() -> new OngNaoEncontradaException())
+        );
     }
 
     public void inserir(OngDTO dto) {

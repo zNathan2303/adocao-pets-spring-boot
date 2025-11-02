@@ -1,8 +1,5 @@
 package br.dev.nathan.adocao_pets.entities;
 
-
-import br.dev.nathan.adocao_pets.dtos.RacaDTO;
-import br.dev.nathan.adocao_pets.repositories.RacaRepository;
 import jakarta.persistence.*;
 import lombok.*;
 
