@@ -14,14 +14,38 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(RacaNaoEncontradaException.class)
+    private ResponseEntity<DefaultErrorResponse> racaNaoEncontradaHandler() {
+
+        DefaultErrorResponse error = new DefaultErrorResponse(
+            404,
+            "Not Found",
+            "Raça não encontrada!",
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(404).body(error);
+    }
+
+    @ExceptionHandler(EspecieNaoExistenteException.class)
+    private ResponseEntity<DefaultErrorResponse> especieNaoExistenteHandler() {
+
+        DefaultErrorResponse error = new DefaultErrorResponse(
+            400,
+            "Bad Request",
+            "Espécie informada não existe!",
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(400).body(error);
+    }
+
     @ExceptionHandler(AdotanteNaoEncontradoException.class)
     private ResponseEntity<DefaultErrorResponse> adotanteNaoEncontradaHandler() {
 
         DefaultErrorResponse error = new DefaultErrorResponse(
-                404,
-                "Not Found",
-                "Adotante não encontrado!",
-                LocalDateTime.now()
+            404,
+            "Not Found",
+            "Adotante não encontrado!",
+            LocalDateTime.now()
         );
         return ResponseEntity.status(404).body(error);
     }
@@ -82,10 +106,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     private ResponseEntity<DefaultErrorResponse> errorInRequestBody() {
         DefaultErrorResponse error = new DefaultErrorResponse(
-                400,
-                "Bad Request",
-                "O corpo da requisição está mal formulado!",
-                LocalDateTime.now()
+            400,
+            "Bad Request",
+            "O corpo da requisição está mal formulado!",
+            LocalDateTime.now()
         );
         return ResponseEntity.status(400).body(error);
     }
