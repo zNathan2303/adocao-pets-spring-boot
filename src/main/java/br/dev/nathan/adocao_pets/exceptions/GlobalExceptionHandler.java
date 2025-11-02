@@ -18,6 +18,18 @@ public class GlobalExceptionHandler {
     * ERROS 404 - ENTIDADES NÃO ENCONTRADAS
     * */
 
+    @ExceptionHandler(EnderecoOngNaoEncontradoException.class)
+    private ResponseEntity<DefaultErrorResponse> tratarEnderecoOngNaoEncontrado() {
+
+        DefaultErrorResponse error = new DefaultErrorResponse(
+            404,
+            "Not Found",
+            "Endereço da ONG não encontrado!",
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(404).body(error);
+    }
+
     @ExceptionHandler(RacaNaoEncontradaException.class)
     private ResponseEntity<DefaultErrorResponse> tratarRacaNaoEncontrada() {
 
@@ -70,14 +82,26 @@ public class GlobalExceptionHandler {
     * ERROS 400 - ERROS RELACIONADOS A REQUISIÇÃO MAL FORMULADO
     * */
 
+    @ExceptionHandler(OngInexistenteException.class)
+    private ResponseEntity<DefaultErrorResponse> tratarOngInexistente() {
+
+        DefaultErrorResponse error = new DefaultErrorResponse(
+            400,
+            "Bad Request",
+            "ONG informada não existe!",
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(400).body(error);
+    }
+
     @ExceptionHandler(EspecieInexistenteException.class)
     private ResponseEntity<DefaultErrorResponse> tratarEspecieInexistente() {
 
         DefaultErrorResponse error = new DefaultErrorResponse(
-                400,
-                "Bad Request",
-                "Espécie informada não existe!",
-                LocalDateTime.now()
+            400,
+            "Bad Request",
+            "Espécie informada não existe!",
+            LocalDateTime.now()
         );
         return ResponseEntity.status(400).body(error);
     }
