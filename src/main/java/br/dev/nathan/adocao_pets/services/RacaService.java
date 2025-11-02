@@ -3,7 +3,7 @@ package br.dev.nathan.adocao_pets.services;
 import br.dev.nathan.adocao_pets.dtos.RacaDTO;
 import br.dev.nathan.adocao_pets.entities.EspecieEntity;
 import br.dev.nathan.adocao_pets.entities.RacaEntity;
-import br.dev.nathan.adocao_pets.exceptions.EspecieNaoExistenteException;
+import br.dev.nathan.adocao_pets.exceptions.EspecieInexistenteException;
 import br.dev.nathan.adocao_pets.exceptions.RacaNaoEncontradaException;
 import br.dev.nathan.adocao_pets.repositories.EspecieRepository;
 import br.dev.nathan.adocao_pets.repositories.RacaRepository;
@@ -25,7 +25,7 @@ public class RacaService {
     private RacaEntity transformarDTOEmEntity(RacaDTO dto) {
 
         EspecieEntity especie = especieRepository.findById(dto.getIdEspecie())
-                .orElseThrow(() -> new EspecieNaoExistenteException());
+                .orElseThrow(() -> new EspecieInexistenteException());
 
         System.out.println(especie);
 

@@ -14,8 +14,12 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /*
+    * ERROS 404 - ENTIDADES NÃO ENCONTRADAS
+    * */
+
     @ExceptionHandler(RacaNaoEncontradaException.class)
-    private ResponseEntity<DefaultErrorResponse> racaNaoEncontradaHandler() {
+    private ResponseEntity<DefaultErrorResponse> tratarRacaNaoEncontrada() {
 
         DefaultErrorResponse error = new DefaultErrorResponse(
             404,
@@ -26,20 +30,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(404).body(error);
     }
 
-    @ExceptionHandler(EspecieNaoExistenteException.class)
-    private ResponseEntity<DefaultErrorResponse> especieNaoExistenteHandler() {
-
-        DefaultErrorResponse error = new DefaultErrorResponse(
-            400,
-            "Bad Request",
-            "Espécie informada não existe!",
-            LocalDateTime.now()
-        );
-        return ResponseEntity.status(400).body(error);
-    }
-
     @ExceptionHandler(AdotanteNaoEncontradoException.class)
-    private ResponseEntity<DefaultErrorResponse> adotanteNaoEncontradaHandler() {
+    private ResponseEntity<DefaultErrorResponse> tratarAdotanteNaoEncontrado() {
 
         DefaultErrorResponse error = new DefaultErrorResponse(
             404,
@@ -51,7 +43,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(OngNaoEncontradaException.class)
-    private ResponseEntity<DefaultErrorResponse> ongNaoEncontradaHandler() {
+    private ResponseEntity<DefaultErrorResponse> tratarOngNaoEncontrada() {
 
         DefaultErrorResponse error = new DefaultErrorResponse(
             404,
@@ -63,7 +55,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EspecieNaoEncontradaException.class)
-    private ResponseEntity<DefaultErrorResponse> especieNaoEncontradaHandler() {
+    private ResponseEntity<DefaultErrorResponse> tratarEspecieNaoEncontrada() {
 
         DefaultErrorResponse error = new DefaultErrorResponse(
             404,
@@ -74,8 +66,24 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(404).body(error);
     }
 
+    /*
+    * ERROS 400 - ERROS RELACIONADOS A REQUISIÇÃO MAL FORMULADO
+    * */
+
+    @ExceptionHandler(EspecieInexistenteException.class)
+    private ResponseEntity<DefaultErrorResponse> tratarEspecieInexistente() {
+
+        DefaultErrorResponse error = new DefaultErrorResponse(
+                400,
+                "Bad Request",
+                "Espécie informada não existe!",
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(400).body(error);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    private ResponseEntity<DefaultErrorResponse> validationHandler(MethodArgumentNotValidException exception) {
+    private ResponseEntity<DefaultErrorResponse> tratarErrosDeValidacao(MethodArgumentNotValidException exception) {
 
         String errorMessages = exception.getBindingResult()
             .getAllErrors()
@@ -93,7 +101,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DateTimeParseException.class)
-    private ResponseEntity<DefaultErrorResponse> dateTimeParseHandler(DateTimeParseException exception) {
+    private ResponseEntity<DefaultErrorResponse> tratarErrosDeData(DateTimeParseException exception) {
         DefaultErrorResponse error = new DefaultErrorResponse(
             400,
             "Bad Request",
@@ -104,7 +112,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    private ResponseEntity<DefaultErrorResponse> errorInRequestBody() {
+    private ResponseEntity<DefaultErrorResponse> tratarErroDoCorpoDaRequisicao() {
         DefaultErrorResponse error = new DefaultErrorResponse(
             400,
             "Bad Request",
