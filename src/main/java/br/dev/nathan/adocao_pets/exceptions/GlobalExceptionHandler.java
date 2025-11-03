@@ -18,6 +18,18 @@ public class GlobalExceptionHandler {
     * ERROS 404 - ENTIDADES NÃO ENCONTRADAS
     * */
 
+    @ExceptionHandler(EnderecoAdotanteNaoEncontradoException.class)
+    private ResponseEntity<DefaultErrorResponse> tratarEnderecoAdotanteNaoEncontrado() {
+
+        DefaultErrorResponse error = new DefaultErrorResponse(
+            404,
+            "Not Found",
+            "Endereço do adotante não encontrado!",
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(404).body(error);
+    }
+
     @ExceptionHandler(EnderecoOngNaoEncontradoException.class)
     private ResponseEntity<DefaultErrorResponse> tratarEnderecoOngNaoEncontrado() {
 
@@ -81,6 +93,18 @@ public class GlobalExceptionHandler {
     /*
     * ERROS 400 - ERROS RELACIONADOS A REQUISIÇÃO MAL FORMULADO
     * */
+
+    @ExceptionHandler(AdotanteInexistenteException.class)
+    private ResponseEntity<DefaultErrorResponse> tratarAdotanteInexistente() {
+
+        DefaultErrorResponse error = new DefaultErrorResponse(
+            400,
+            "Bad Request",
+            "Adotante informado não existe!",
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(400).body(error);
+    }
 
     @ExceptionHandler(OngInexistenteException.class)
     private ResponseEntity<DefaultErrorResponse> tratarOngInexistente() {
