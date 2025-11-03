@@ -18,6 +18,18 @@ public class GlobalExceptionHandler {
     * ERROS 404 - ENTIDADES NÃO ENCONTRADAS
     * */
 
+    @ExceptionHandler(PetNaoEncontradoException.class)
+    private ResponseEntity<DefaultErrorResponse> tratarPetNaoEncontrado() {
+
+        DefaultErrorResponse error = new DefaultErrorResponse(
+            404,
+            "Not Found",
+            "Pet não encontrado!",
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(404).body(error);
+    }
+
     @ExceptionHandler(EnderecoAdotanteNaoEncontradoException.class)
     private ResponseEntity<DefaultErrorResponse> tratarEnderecoAdotanteNaoEncontrado() {
 
@@ -93,6 +105,18 @@ public class GlobalExceptionHandler {
     /*
     * ERROS 400 - ERROS RELACIONADOS A REQUISIÇÃO MAL FORMULADO
     * */
+
+    @ExceptionHandler(RacaInexistenteException.class)
+    private ResponseEntity<DefaultErrorResponse> tratarRacaInexistente() {
+
+        DefaultErrorResponse error = new DefaultErrorResponse(
+            400,
+            "Bad Request",
+            "Raça informada não existe!",
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(400).body(error);
+    }
 
     @ExceptionHandler(AdotanteInexistenteException.class)
     private ResponseEntity<DefaultErrorResponse> tratarAdotanteInexistente() {
