@@ -18,13 +18,14 @@ public class AdocaoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private LocalDate dataAdocao;
 
     @ManyToOne
-    @JoinColumn(name = "id_adotante")
+    @JoinColumn(name = "id_adotante", nullable = false)
     private AdotanteEntity adotante;
 
     @OneToOne
-    @JoinColumn(name = "id_pet")
+    @JoinColumn(name = "id_pet", nullable = false)
     private PetEntity pet;
 }

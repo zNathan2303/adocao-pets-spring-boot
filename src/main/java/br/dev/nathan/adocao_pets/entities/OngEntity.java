@@ -19,11 +19,23 @@ public class OngEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(length = 100, nullable = false)
     private String nome;
+
+    @Column(length = 14, nullable = false)
     private String cnpj;
+
+    @Column(nullable = false)
     private LocalDate dataFundacao;
-    private Boolean ativa;
+
+    @Column(nullable = false)
+    private Boolean ativa = true;
+
+    @Column(length = 20, nullable = false)
     private String telefone;
+
+    @Column(length = 200, nullable = false)
     private String email;
 
     public OngEntity(OngDTO dto) {

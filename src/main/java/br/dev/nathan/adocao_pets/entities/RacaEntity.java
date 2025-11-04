@@ -16,9 +16,10 @@ public class RacaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 100, nullable = false)
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name = "id_especie")
+    @JoinColumn(name = "id_especie", nullable = false)
     private EspecieEntity especie;
 }

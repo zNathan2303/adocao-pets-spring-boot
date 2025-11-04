@@ -27,8 +27,7 @@ public class OngDTO {
     @NotNull(message = "Data de fundação inválida!")
     private LocalDate dataFundacao;
 
-    @NotNull(message = "Campo ativa inválido!")
-    private Boolean ativa;
+    private Boolean ativa = true;
 
     @NotBlank(message = "Telefone inválido!")
     @Size(max = 20, message = "O telefone pode ter no máximo 20 caracteres!")

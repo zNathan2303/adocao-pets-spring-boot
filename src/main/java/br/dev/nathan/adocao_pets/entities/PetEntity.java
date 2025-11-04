@@ -15,18 +15,30 @@ public class PetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(length = 50, nullable = false)
     private String nome;
+
+    @Column(length = 250, nullable = false)
     private String fotoUrl;
+
+    @Column(nullable = false)
     private Integer idadeAproximada;
+
+    @Column(length = 7, nullable = false)
     private String porte;
+
+    @Column(length = 5, nullable = false)
     private String sexo;
+
+    @Column
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "id_raca")
+    @JoinColumn(name = "id_raca", nullable = false)
     private RacaEntity raca;
 
     @ManyToOne
-    @JoinColumn(name = "id_ong")
+    @JoinColumn(name = "id_ong", nullable = false)
     private OngEntity ong;
 }
