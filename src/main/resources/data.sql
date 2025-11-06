@@ -30,8 +30,8 @@ INSERT INTO tb_raca (nome, id_especie) VALUES
 INSERT INTO tb_ong (nome, cnpj, data_fundacao, ativa, telefone, email) VALUES
 ('Amor Animal', '12345678000101', '2012-05-14', TRUE, '(11)99999-0001', 'contato@amoranimal.org'),
 ('Patas Felizes', '12345678000102', '2015-08-09', TRUE, '(11)99999-0002', 'info@patasfelizes.org'),
-('Lar dos Peludos', '12345678000103', '2010-03-22', TRUE, '(11)99999-0003', 'contato@lardospeludos.org'),
-('Vida Selvagem', '12345678000104', '2018-09-11', TRUE, '(11)99999-0004', 'admin@vidaselvagem.org'),
+('Lar dos Peludos', '12345678000103', '2010-03-22', FALSE, '(11)99999-0003', 'contato@lardospeludos.org'),
+('Vida Selvagem', '12345678000104', '2018-09-11', FALSE, '(11)99999-0004', 'admin@vidaselvagem.org'),
 ('Refúgio Animal', '12345678000105', '2016-01-30', TRUE, '(11)99999-0005', 'refugio@refugioanimal.org');
 
 -- ENDEREÇOS DAS ONGs (1 a 3 cada)

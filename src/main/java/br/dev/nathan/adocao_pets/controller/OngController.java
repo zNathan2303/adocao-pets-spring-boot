@@ -1,6 +1,8 @@
 package br.dev.nathan.adocao_pets.controller;
 
+import br.dev.nathan.adocao_pets.dtos.EnderecoOngDTO;
 import br.dev.nathan.adocao_pets.dtos.OngDTO;
+import br.dev.nathan.adocao_pets.dtos.PetDTO;
 import br.dev.nathan.adocao_pets.services.OngService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +28,24 @@ public class OngController {
         return ResponseEntity.ok(service.listarTudo());
     }
 
+    @GetMapping("/ativa")
+    public ResponseEntity<List<OngDTO>> listarTodasAsOngsAtivas() {
+        return ResponseEntity.ok(service.listarOngsAtivas());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<OngDTO> buscarOngPorId(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.buscarPorId(id));
+    }
+
+    @GetMapping("/{id}/pet")
+    public ResponseEntity<List<PetDTO>> listarTodosOsPetsDeUmaOng(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(service.listarPetsDeUmaOng(id));
+    }
+
+    @GetMapping("/{id}/endereco")
+    public ResponseEntity<List<EnderecoOngDTO>> listarTodosOsEnderecosDeUmaOng(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(service.listarEnderecosDeUmaOng(id));
     }
 
     @PostMapping
