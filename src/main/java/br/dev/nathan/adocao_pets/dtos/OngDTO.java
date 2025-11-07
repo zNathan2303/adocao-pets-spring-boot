@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.dtos;
 
 import br.dev.nathan.adocao_pets.entities.OngEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Schema(name = "ONG")
 public class OngDTO {
 
     private Integer id;

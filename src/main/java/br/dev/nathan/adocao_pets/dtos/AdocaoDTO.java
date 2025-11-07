@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.dtos;
 
 import br.dev.nathan.adocao_pets.entities.AdocaoEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Schema(name = "Adoção")
 public class AdocaoDTO {
 
     private Integer id;

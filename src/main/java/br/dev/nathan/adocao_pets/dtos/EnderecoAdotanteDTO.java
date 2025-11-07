@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.dtos;
 
 import br.dev.nathan.adocao_pets.entities.EnderecoAdotanteEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Schema(name = "Endereço do adotante")
 public class EnderecoAdotanteDTO {
 
     private Integer id;

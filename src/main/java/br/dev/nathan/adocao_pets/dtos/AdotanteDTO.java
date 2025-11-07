@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.dtos;
 
 import br.dev.nathan.adocao_pets.entities.AdotanteEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
@@ -10,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Schema(name = "Adotante")
 public class AdotanteDTO {
 
     private Integer id;
