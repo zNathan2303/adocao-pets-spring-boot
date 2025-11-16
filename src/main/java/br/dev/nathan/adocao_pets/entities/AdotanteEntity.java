@@ -1,6 +1,6 @@
 package br.dev.nathan.adocao_pets.entities;
 
-import br.dev.nathan.adocao_pets.dtos.AdotanteDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.AdotanteRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
@@ -33,7 +33,7 @@ public class AdotanteEntity {
     @Column(length = 11)
     private String telefone;
 
-    public AdotanteEntity(AdotanteDTO dto) {
+    public AdotanteEntity(AdotanteRequest dto) {
         BeanUtils.copyProperties(dto, this);
     }
 }

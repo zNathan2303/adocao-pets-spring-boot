@@ -1,8 +1,9 @@
 package br.dev.nathan.adocao_pets.controller;
 
-import br.dev.nathan.adocao_pets.dtos.EnderecoOngDTO;
-import br.dev.nathan.adocao_pets.dtos.OngDTO;
-import br.dev.nathan.adocao_pets.dtos.PetDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.OngRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.EnderecoOngResponse;
+import br.dev.nathan.adocao_pets.dtos.responses.OngResponse;
+import br.dev.nathan.adocao_pets.dtos.responses.PetResponse;
 import br.dev.nathan.adocao_pets.services.OngService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -37,7 +38,7 @@ public class OngController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Sucesso!")
     })
-    public ResponseEntity<List<OngDTO>> listarTodasAsOngs() {
+    public ResponseEntity<List<OngResponse>> listarTodasAsOngs() {
         return ResponseEntity.ok(service.listarTudo());
     }
 
@@ -49,7 +50,7 @@ public class OngController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Sucesso!")
     })
-    public ResponseEntity<List<OngDTO>> listarTodasAsOngsAtivas() {
+    public ResponseEntity<List<OngResponse>> listarTodasAsOngsAtivas() {
         return ResponseEntity.ok(service.listarOngsAtivas());
     }
 
@@ -62,7 +63,7 @@ public class OngController {
         @ApiResponse(responseCode = "200", description = "Sucesso!"),
         @ApiResponse(responseCode = "404", description = "ONG não encontrada!", content = @Content())
     })
-    public ResponseEntity<OngDTO> buscarOngPorId(@PathVariable("id") Integer id) {
+    public ResponseEntity<OngResponse> buscarOngPorId(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
@@ -75,7 +76,7 @@ public class OngController {
         @ApiResponse(responseCode = "200", description = "Sucesso!"),
         @ApiResponse(responseCode = "404", description = "ONG não encontrada!", content = @Content())
     })
-    public ResponseEntity<List<PetDTO>> listarTodosOsPetsDeUmaOng(@PathVariable("id") Integer id) {
+    public ResponseEntity<List<PetResponse>> listarTodosOsPetsDeUmaOng(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.listarPetsDeUmaOng(id));
     }
 
@@ -88,7 +89,7 @@ public class OngController {
         @ApiResponse(responseCode = "200", description = "Sucesso!"),
         @ApiResponse(responseCode = "404", description = "ONG não encontrada!", content = @Content())
     })
-    public ResponseEntity<List<EnderecoOngDTO>> listarTodosOsEnderecosDeUmaOng(@PathVariable("id") Integer id) {
+    public ResponseEntity<List<EnderecoOngResponse>> listarTodosOsEnderecosDeUmaOng(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.listarEnderecosDeUmaOng(id));
     }
 
@@ -104,7 +105,7 @@ public class OngController {
                 "a data é inexistente/formato é inválido " +
                 "ou algum dos campos está inválido!")
     })
-    public ResponseEntity<Void> inserirOng(@Valid @RequestBody OngDTO dto) {
+    public ResponseEntity<Void> inserirOng(@Valid @RequestBody OngRequest dto) {
         service.inserir(dto);
         return ResponseEntity.status(201).build();
     }
@@ -122,7 +123,7 @@ public class OngController {
                 "ou algum dos campos está inválido!"),
         @ApiResponse(responseCode = "404", description = "ONG não encontrada!")
     })
-    public ResponseEntity<Void> atualizarOng(@Valid @RequestBody OngDTO dto,
+    public ResponseEntity<Void> atualizarOng(@Valid @RequestBody OngRequest dto,
                                              @PathVariable("id") Integer id) {
         service.atualizar(dto, id);
         return ResponseEntity.status(200).build();

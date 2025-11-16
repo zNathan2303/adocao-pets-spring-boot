@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.services;
 
-import br.dev.nathan.adocao_pets.dtos.EnderecoOngDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.EnderecoOngRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.EnderecoOngResponse;
 import br.dev.nathan.adocao_pets.entities.EnderecoOngEntity;
 import br.dev.nathan.adocao_pets.entities.OngEntity;
 import br.dev.nathan.adocao_pets.exceptions.EnderecoOngNaoEncontradoException;
@@ -23,12 +24,12 @@ public class EnderecoOngService {
         this.ongRepository = ongRepository;
     }
 
-    private EnderecoOngEntity transformarDTOEmEntity (EnderecoOngDTO dto) {
+    private EnderecoOngEntity transformarDTOEmEntity (EnderecoOngRequest dto) {
         OngEntity ong = ongRepository.findById(dto.getIdOng())
             .orElseThrow(() -> new OngInexistenteException());
 
         return new EnderecoOngEntity(
-            dto.getId(),
+            null,
             dto.getLogradouro(),
             dto.getNumero(),
             dto.getBairro(),
@@ -39,25 +40,25 @@ public class EnderecoOngService {
         );
     }
 
-    public List<EnderecoOngDTO> listarTudo() {
+    public List<EnderecoOngResponse> listarTudo() {
         return enderecoOngRepository.findAll()
             .stream()
-            .map(x -> new EnderecoOngDTO(x))
+            .map(x -> new EnderecoOngResponse(x))
             .toList();
     }
 
-    public EnderecoOngDTO buscarPorId(Integer id) {
-        return new EnderecoOngDTO(
+    public EnderecoOngResponse buscarPorId(Integer id) {
+        return new EnderecoOngResponse(
             enderecoOngRepository.findById(id)
                 .orElseThrow(() -> new EnderecoOngNaoEncontradoException())
         );
     }
 
-    public void inserir(EnderecoOngDTO dto) {
+    public void inserir(EnderecoOngRequest dto) {
         enderecoOngRepository.save(transformarDTOEmEntity(dto));
     }
 
-    public void atualizar(EnderecoOngDTO dto, Integer id) {
+    public void atualizar(EnderecoOngRequest dto, Integer id) {
         if (enderecoOngRepository.existsById(id)) {
             EnderecoOngEntity entity = transformarDTOEmEntity(dto);
             entity.setId(id);

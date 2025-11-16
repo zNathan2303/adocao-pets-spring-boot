@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.controller;
 
-import br.dev.nathan.adocao_pets.dtos.EnderecoAdotanteDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.EnderecoAdotanteRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.EnderecoAdotanteResponse;
 import br.dev.nathan.adocao_pets.services.EnderecoAdotanteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,7 +35,7 @@ public class EnderecoAdotanteController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Sucesso!")
     })
-    public ResponseEntity<List<EnderecoAdotanteDTO>> listarTodosEnderecosDosAdotantes() {
+    public ResponseEntity<List<EnderecoAdotanteResponse>> listarTodosEnderecosDosAdotantes() {
         return ResponseEntity.ok(service.listarTudo());
     }
 
@@ -47,7 +48,7 @@ public class EnderecoAdotanteController {
         @ApiResponse(responseCode = "200", description = "Sucesso!"),
         @ApiResponse(responseCode = "404", description = "Endereço do adotante não encontrado!", content = @Content())
     })
-    public ResponseEntity<EnderecoAdotanteDTO> buscarEnderecoDeAlgumAdotantePorId(@PathVariable("id") Integer id) {
+    public ResponseEntity<EnderecoAdotanteResponse> buscarEnderecoDeAlgumAdotantePorId(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
@@ -63,7 +64,7 @@ public class EnderecoAdotanteController {
                 "o adotante informado não existe " +
                 "ou algum dos campos está inválido!")
     })
-    public ResponseEntity<Void> inserirEnderecoDeUmAdotante(@Valid @RequestBody EnderecoAdotanteDTO dto) {
+    public ResponseEntity<Void> inserirEnderecoDeUmAdotante(@Valid @RequestBody EnderecoAdotanteRequest dto) {
         service.inserir(dto);
         return ResponseEntity.status(201).build();
     }
@@ -81,7 +82,7 @@ public class EnderecoAdotanteController {
                 "ou algum dos campos está inválido"),
         @ApiResponse(responseCode = "404", description = "Endereço do adotante não encontrado!")
     })
-    public ResponseEntity<Void> atualizarEnderecoDeUmAdotante(@Valid @RequestBody EnderecoAdotanteDTO dto,
+    public ResponseEntity<Void> atualizarEnderecoDeUmAdotante(@Valid @RequestBody EnderecoAdotanteRequest dto,
                                                               @PathVariable("id") Integer id) {
         service.atualizar(dto, id);
         return ResponseEntity.status(200).build();

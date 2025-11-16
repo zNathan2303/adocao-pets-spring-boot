@@ -1,6 +1,6 @@
 package br.dev.nathan.adocao_pets.entities;
 
-import br.dev.nathan.adocao_pets.dtos.EspecieDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.EspecieRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
@@ -21,7 +21,7 @@ public class EspecieEntity {
     @Column(length = 50, nullable = false)
     private String nome;
 
-    public EspecieEntity(EspecieDTO dto) {
+    public EspecieEntity(EspecieRequest dto) {
         BeanUtils.copyProperties(dto, this);
     }
 }

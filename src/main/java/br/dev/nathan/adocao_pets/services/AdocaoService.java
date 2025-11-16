@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.services;
 
-import br.dev.nathan.adocao_pets.dtos.AdocaoDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.AdocaoRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.AdocaoResponse;
 import br.dev.nathan.adocao_pets.entities.AdocaoEntity;
 import br.dev.nathan.adocao_pets.entities.AdotanteEntity;
 import br.dev.nathan.adocao_pets.entities.PetEntity;
@@ -28,42 +29,42 @@ public class AdocaoService {
         this.petRepository = petRepository;
     }
 
-    private AdocaoEntity transformarDTOEmEntity(AdocaoDTO dto) {
+    private AdocaoEntity transformarDTOEmEntity(AdocaoRequest dto) {
         AdotanteEntity adotante = adotanteRepository.findById(dto.getIdAdotante())
             .orElseThrow(() -> new AdotanteInexistenteException());
         PetEntity pet = petRepository.findById(dto.getIdPet())
             .orElseThrow(() -> new PetInexistenteException());
 
         return new AdocaoEntity(
-            dto.getId(),
+            null,
             dto.getDataAdocao(),
             adotante,
             pet
         );
     }
 
-    public List<AdocaoDTO> listarTudo() {
+    public List<AdocaoResponse> listarTudo() {
         return adocaoRepository.findAll()
             .stream()
-            .map(x -> new AdocaoDTO(x))
+            .map(x -> new AdocaoResponse(x))
             .toList();
     }
 
-    public AdocaoDTO buscarPorId(Integer id) {
-        return new AdocaoDTO(
+    public AdocaoResponse buscarPorId(Integer id) {
+        return new AdocaoResponse(
             adocaoRepository.findById(id)
                 .orElseThrow(() -> new AdocaoNaoEncontradaException())
         );
     }
 
-    public void inserir(AdocaoDTO dto) {
+    public void inserir(AdocaoRequest dto) {
         if (adocaoRepository.existeAdocaoComIdDoPet(dto.getIdPet()) == 0)
             adocaoRepository.save(transformarDTOEmEntity(dto));
         else
             throw new PetAdotadoException();
     }
 
-    public void atualizar(AdocaoDTO dto, Integer id) {
+    public void atualizar(AdocaoRequest dto, Integer id) {
 
         if (adocaoRepository.existeAdocaoComIdDoPet(dto.getIdPet()) == 1)
             throw new PetAdotadoException();

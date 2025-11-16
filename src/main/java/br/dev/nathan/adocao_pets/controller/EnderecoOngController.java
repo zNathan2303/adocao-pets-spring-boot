@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.controller;
 
-import br.dev.nathan.adocao_pets.dtos.EnderecoOngDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.EnderecoOngRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.EnderecoOngResponse;
 import br.dev.nathan.adocao_pets.services.EnderecoOngService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,7 +35,7 @@ public class EnderecoOngController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Sucesso!")
     })
-    public ResponseEntity<List<EnderecoOngDTO>> listarTodosOsEnderecosDasOngs() {
+    public ResponseEntity<List<EnderecoOngResponse>> listarTodosOsEnderecosDasOngs() {
         return ResponseEntity.ok(service.listarTudo());
     }
 
@@ -47,7 +48,7 @@ public class EnderecoOngController {
         @ApiResponse(responseCode = "200", description = "Sucesso!"),
         @ApiResponse(responseCode = "404", description = "Endereço da ONG não encontrado!", content = @Content())
     })
-    public ResponseEntity<EnderecoOngDTO> buscarEnderecoDeAlgumaOngPorId(@PathVariable("id") Integer id) {
+    public ResponseEntity<EnderecoOngResponse> buscarEnderecoDeAlgumaOngPorId(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
@@ -63,7 +64,7 @@ public class EnderecoOngController {
                 "a ONG informada não existe " +
                 "ou algum dos campos está inválido!")
     })
-    public ResponseEntity<Void> inserirEnderecoDeUmaOng(@Valid @RequestBody EnderecoOngDTO dto) {
+    public ResponseEntity<Void> inserirEnderecoDeUmaOng(@Valid @RequestBody EnderecoOngRequest dto) {
         service.inserir(dto);
         return ResponseEntity.status(201).build();
     }
@@ -81,7 +82,7 @@ public class EnderecoOngController {
                 "ou algum dos campos está inválido"),
         @ApiResponse(responseCode = "404", description = "Endereço da ONG não encontrado!")
     })
-    public ResponseEntity<Void> atualizarEnderecoDeUmaOng(@Valid @RequestBody EnderecoOngDTO dto,
+    public ResponseEntity<Void> atualizarEnderecoDeUmaOng(@Valid @RequestBody EnderecoOngRequest dto,
                                                           @PathVariable("id") Integer id) {
         service.atualizar(dto, id);
         return ResponseEntity.status(200).build();

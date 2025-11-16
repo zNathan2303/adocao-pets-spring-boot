@@ -1,10 +1,8 @@
-package br.dev.nathan.adocao_pets.dtos;
+package br.dev.nathan.adocao_pets.dtos.requests;
 
-import br.dev.nathan.adocao_pets.entities.OngEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 
@@ -12,11 +10,8 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Schema(name = "ONG")
-public class OngDTO {
-
-    private Integer id;
+@Schema(name = "ONG - Request")
+public class OngRequest {
 
     @NotBlank(message = "Nome inválido!")
     @Size(max = 100, message = "O nome pode ter no máximo 100 caracteres!")
@@ -40,7 +35,4 @@ public class OngDTO {
     @Size(max = 200, message = "O email pode ter no máximo 200 caracteres!")
     private String email;
 
-    public OngDTO(OngEntity entity) {
-        BeanUtils.copyProperties(entity, this);
-    }
 }

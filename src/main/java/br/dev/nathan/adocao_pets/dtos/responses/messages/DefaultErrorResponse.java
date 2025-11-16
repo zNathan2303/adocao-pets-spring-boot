@@ -1,4 +1,4 @@
-package br.dev.nathan.adocao_pets.dtos.errors;
+package br.dev.nathan.adocao_pets.dtos.responses.messages;
 
 import java.time.LocalDateTime;
 

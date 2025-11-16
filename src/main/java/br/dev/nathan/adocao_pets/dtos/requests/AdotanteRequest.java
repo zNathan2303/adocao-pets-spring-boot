@@ -1,20 +1,15 @@
-package br.dev.nathan.adocao_pets.dtos;
+package br.dev.nathan.adocao_pets.dtos.requests;
 
-import br.dev.nathan.adocao_pets.entities.AdotanteEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Schema(name = "Adotante")
-public class AdotanteDTO {
-
-    private Integer id;
+@Schema(name = "Adotante - Request")
+public class AdotanteRequest {
 
     @NotBlank(message = "Nome inválido!")
     @Size(max = 150, message = "O nome pode ter no máximo 150 caracteres!")
@@ -37,7 +32,4 @@ public class AdotanteDTO {
     @Size(max = 11, message = "O telefone pode ter no máximo 11 caracteres!")
     private String telefone;
 
-    public AdotanteDTO(AdotanteEntity entity) {
-        BeanUtils.copyProperties(entity, this);
-    }
 }

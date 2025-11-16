@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.controller;
 
-import br.dev.nathan.adocao_pets.dtos.PetDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.PetRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.PetResponse;
 import br.dev.nathan.adocao_pets.services.PetService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,7 +35,7 @@ public class PetController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Sucesso!")
     })
-    public ResponseEntity<List<PetDTO>> listarTodosPets() {
+    public ResponseEntity<List<PetResponse>> listarTodosPets() {
         return ResponseEntity.ok(service.listarTudo());
     }
 
@@ -47,7 +48,7 @@ public class PetController {
         @ApiResponse(responseCode = "200", description = "Sucesso!"),
         @ApiResponse(responseCode = "404", description = "Pet não encontrado!", content = @Content())
     })
-    public ResponseEntity<PetDTO> buscarPetPorId(@PathVariable Integer id) {
+    public ResponseEntity<PetResponse> buscarPetPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
@@ -65,7 +66,7 @@ public class PetController {
                 "ONG informada não existe " +
                 "ou raça informada não existe!")
     })
-    public ResponseEntity<Void> inserirPet(@Valid @RequestBody PetDTO dto) {
+    public ResponseEntity<Void> inserirPet(@Valid @RequestBody PetRequest dto) {
         service.inserir(dto);
         return ResponseEntity.status(201).build();
     }
@@ -85,7 +86,7 @@ public class PetController {
                 "ou raça informada não existe!"),
         @ApiResponse(responseCode = "404", description = "Pet não encontrado!")
     })
-    public ResponseEntity<Void> atualizarPet(@Valid @RequestBody PetDTO dto,
+    public ResponseEntity<Void> atualizarPet(@Valid @RequestBody PetRequest dto,
                                              @PathVariable Integer id) {
         service.atualizar(dto, id);
         return ResponseEntity.status(200).build();

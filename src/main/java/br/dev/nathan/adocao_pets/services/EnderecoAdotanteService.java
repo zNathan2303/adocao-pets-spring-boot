@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.services;
 
-import br.dev.nathan.adocao_pets.dtos.EnderecoAdotanteDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.EnderecoAdotanteRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.EnderecoAdotanteResponse;
 import br.dev.nathan.adocao_pets.entities.AdotanteEntity;
 import br.dev.nathan.adocao_pets.entities.EnderecoAdotanteEntity;
 import br.dev.nathan.adocao_pets.exceptions.AdotanteInexistenteException;
@@ -23,12 +24,12 @@ public class EnderecoAdotanteService {
         this.adotanteRepository = adotanteRepository;
     }
 
-    private EnderecoAdotanteEntity transformarDTOEmEntity(EnderecoAdotanteDTO dto) {
+    private EnderecoAdotanteEntity transformarDTOEmEntity(EnderecoAdotanteRequest dto) {
         AdotanteEntity adotante = adotanteRepository.findById(dto.getIdAdotante())
             .orElseThrow(() -> new AdotanteInexistenteException());
 
         return new EnderecoAdotanteEntity(
-            dto.getId(),
+            null,
             dto.getLogradouro(),
             dto.getNumero(),
             dto.getBairro(),
@@ -38,25 +39,25 @@ public class EnderecoAdotanteService {
         );
     }
 
-    public List<EnderecoAdotanteDTO> listarTudo() {
+    public List<EnderecoAdotanteResponse> listarTudo() {
         return enderecoAdotanteRepository.findAll()
             .stream()
-            .map(x -> new EnderecoAdotanteDTO(x))
+            .map(x -> new EnderecoAdotanteResponse(x))
             .toList();
     }
 
-    public EnderecoAdotanteDTO buscarPorId(Integer id) {
-        return new EnderecoAdotanteDTO(
+    public EnderecoAdotanteResponse buscarPorId(Integer id) {
+        return new EnderecoAdotanteResponse(
             enderecoAdotanteRepository.findById(id)
                 .orElseThrow(() -> new EnderecoAdotanteNaoEncontradoException())
         );
     }
 
-    public void inserir(EnderecoAdotanteDTO dto) {
+    public void inserir(EnderecoAdotanteRequest dto) {
         enderecoAdotanteRepository.save(transformarDTOEmEntity(dto));
     }
 
-    public void atualizar(EnderecoAdotanteDTO dto, Integer id) {
+    public void atualizar(EnderecoAdotanteRequest dto, Integer id) {
         if (enderecoAdotanteRepository.existsById(id)) {
             EnderecoAdotanteEntity entity = transformarDTOEmEntity(dto);
             entity.setId(id);

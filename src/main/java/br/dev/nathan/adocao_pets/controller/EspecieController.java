@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.controller;
 
-import br.dev.nathan.adocao_pets.dtos.EspecieDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.EspecieRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.EspecieResponse;
 import br.dev.nathan.adocao_pets.services.EspecieService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,7 +36,7 @@ public class EspecieController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Sucesso!")
     })
-    public ResponseEntity<List<EspecieDTO>> listarTodasEspecies() {
+    public ResponseEntity<List<EspecieResponse>> listarTodasEspecies() {
         return ResponseEntity.ok(service.listarTudo());
     }
 
@@ -48,7 +49,7 @@ public class EspecieController {
         @ApiResponse(responseCode = "200", description = "Sucesso!"),
         @ApiResponse(responseCode = "404", description = "Espécie não encontrada!", content = @Content())
     })
-    public ResponseEntity<EspecieDTO> buscarEspeciePorId(@PathVariable("id") Integer id) {
+    public ResponseEntity<EspecieResponse> buscarEspeciePorId(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
@@ -63,7 +64,7 @@ public class EspecieController {
             description = "O corpo da requisição está mal formulado ou " +
                 "o nome está inválido!")
     })
-    public ResponseEntity<Void> inserirEspecie(@Valid @RequestBody EspecieDTO dto) {
+    public ResponseEntity<Void> inserirEspecie(@Valid @RequestBody EspecieRequest dto) {
         service.inserir(dto);
         return ResponseEntity.status(201).build();
     }
@@ -80,7 +81,7 @@ public class EspecieController {
                 "o nome está inválido!"),
         @ApiResponse(responseCode = "404", description = "Espécie não encontrada!")
     })
-    public ResponseEntity<Void> atualizarEspecie(@Valid @RequestBody EspecieDTO dto,
+    public ResponseEntity<Void> atualizarEspecie(@Valid @RequestBody EspecieRequest dto,
                                                  @PathVariable("id") Integer id) {
         service.atualizar(dto, id);
         return ResponseEntity.status(200).build();

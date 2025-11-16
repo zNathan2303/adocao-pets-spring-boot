@@ -1,6 +1,6 @@
 package br.dev.nathan.adocao_pets.entities;
 
-import br.dev.nathan.adocao_pets.dtos.OngDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.OngRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
@@ -38,7 +38,7 @@ public class OngEntity {
     @Column(length = 200, nullable = false)
     private String email;
 
-    public OngEntity(OngDTO dto) {
+    public OngEntity(OngRequest dto) {
         BeanUtils.copyProperties(dto, this);
     }
 }

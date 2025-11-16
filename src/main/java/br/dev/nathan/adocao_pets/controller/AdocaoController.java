@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.controller;
 
-import br.dev.nathan.adocao_pets.dtos.AdocaoDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.AdocaoRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.AdocaoResponse;
 import br.dev.nathan.adocao_pets.services.AdocaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,7 +35,7 @@ public class AdocaoController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Sucesso!")
     })
-    public ResponseEntity<List<AdocaoDTO>> listarTodasAdocoes() {
+    public ResponseEntity<List<AdocaoResponse>> listarTodasAdocoes() {
         return ResponseEntity.ok(service.listarTudo());
     }
 
@@ -47,7 +48,7 @@ public class AdocaoController {
         @ApiResponse(responseCode = "200", description = "Sucesso!"),
         @ApiResponse(responseCode = "404", description = "Adoção não encontrada!", content = @Content())
     })
-    public ResponseEntity<AdocaoDTO> buscarAdocaoPorId(@PathVariable Integer id) {
+    public ResponseEntity<AdocaoResponse> buscarAdocaoPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
@@ -64,7 +65,7 @@ public class AdocaoController {
                 "algum dos campos está inválido, " +
                 "ou o pet informado já foi adotado!")
     })
-    public ResponseEntity<Void> inserirAdocao(@Valid @RequestBody AdocaoDTO dto) {
+    public ResponseEntity<Void> inserirAdocao(@Valid @RequestBody AdocaoRequest dto) {
         service.inserir(dto);
         return ResponseEntity.status(201).build();
     }
@@ -83,7 +84,7 @@ public class AdocaoController {
                 "ou o pet informado já foi adotado!"),
         @ApiResponse(responseCode = "404", description = "Adoção não encontrada!")
     })
-    public ResponseEntity<Void> atualizarAdocao(@Valid @RequestBody AdocaoDTO dto,
+    public ResponseEntity<Void> atualizarAdocao(@Valid @RequestBody AdocaoRequest dto,
                                                 @PathVariable Integer id) {
         service.atualizar(dto,id);
         return ResponseEntity.status(200).build();

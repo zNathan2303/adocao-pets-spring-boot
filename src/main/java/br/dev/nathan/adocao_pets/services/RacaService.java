@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.services;
 
-import br.dev.nathan.adocao_pets.dtos.RacaDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.RacaRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.RacaResponse;
 import br.dev.nathan.adocao_pets.entities.EspecieEntity;
 import br.dev.nathan.adocao_pets.entities.RacaEntity;
 import br.dev.nathan.adocao_pets.exceptions.EspecieInexistenteException;
@@ -22,39 +23,37 @@ public class RacaService {
         this.especieRepository = especieRepository;
     }
 
-    private RacaEntity transformarDTOEmEntity(RacaDTO dto) {
+    private RacaEntity transformarDTOEmEntity(RacaRequest dto) {
 
         EspecieEntity especie = especieRepository.findById(dto.getIdEspecie())
             .orElseThrow(() -> new EspecieInexistenteException());
 
-        System.out.println(especie);
-
         return new RacaEntity(
-            dto.getId(),
+            null,
             dto.getNome(),
             especie
         );
     }
 
-    public List<RacaDTO> listarTudo() {
+    public List<RacaResponse> listarTudo() {
         return racaRepository.findAll()
             .stream()
-            .map(x -> new RacaDTO(x))
+            .map(x -> new RacaResponse(x))
             .toList();
     }
 
-    public RacaDTO buscarPorId(Integer id) {
-        return new RacaDTO(
+    public RacaResponse buscarPorId(Integer id) {
+        return new RacaResponse(
             racaRepository.findById(id)
                 .orElseThrow(() -> new RacaNaoEncontradaException())
         );
     }
 
-    public void inserir(RacaDTO dto) {
+    public void inserir(RacaRequest dto) {
         racaRepository.save(transformarDTOEmEntity(dto));
     }
 
-    public void atualizar(RacaDTO dto, Integer id) {
+    public void atualizar(RacaRequest dto, Integer id) {
         if (racaRepository.existsById(id)) {
             RacaEntity entity = transformarDTOEmEntity(dto);
             entity.setId(id);

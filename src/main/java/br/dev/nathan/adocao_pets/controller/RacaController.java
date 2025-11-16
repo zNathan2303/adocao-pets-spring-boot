@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.controller;
 
-import br.dev.nathan.adocao_pets.dtos.RacaDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.RacaRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.RacaResponse;
 import br.dev.nathan.adocao_pets.services.RacaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,7 +35,7 @@ public class RacaController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Sucesso!")
     })
-    public ResponseEntity<List<RacaDTO>> listarTodasAsRacas() {
+    public ResponseEntity<List<RacaResponse>> listarTodasAsRacas() {
         return ResponseEntity.ok(service.listarTudo());
     }
 
@@ -47,7 +48,7 @@ public class RacaController {
         @ApiResponse(responseCode = "200", description = "Sucesso!"),
         @ApiResponse(responseCode = "404", description = "Raça não encontrada!", content = @Content())
     })
-    public ResponseEntity<RacaDTO> buscarRacaPorId(@PathVariable("id") Integer id) {
+    public ResponseEntity<RacaResponse> buscarRacaPorId(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
@@ -63,7 +64,7 @@ public class RacaController {
                 "algum dos campos está inválido " +
                 "ou a espécie informada não existe!")
     })
-    public ResponseEntity<Void> inserirRaca(@Valid @RequestBody RacaDTO dto) {
+    public ResponseEntity<Void> inserirRaca(@Valid @RequestBody RacaRequest dto) {
         service.inserir(dto);
         return ResponseEntity.status(201).build();
     }
@@ -81,7 +82,7 @@ public class RacaController {
                 "ou a espécie informada não existe!"),
         @ApiResponse(responseCode = "404", description = "Raça não encontrada!")
     })
-    public ResponseEntity<Void> atualizarRaca(@Valid @RequestBody RacaDTO dto,
+    public ResponseEntity<Void> atualizarRaca(@Valid @RequestBody RacaRequest dto,
                                               @PathVariable("id") Integer id) {
         service.atualizar(dto, id);
         return ResponseEntity.status(200).build();

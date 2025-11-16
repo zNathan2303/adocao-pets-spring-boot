@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.services;
 
-import br.dev.nathan.adocao_pets.dtos.PetDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.PetRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.PetResponse;
 import br.dev.nathan.adocao_pets.entities.OngEntity;
 import br.dev.nathan.adocao_pets.entities.PetEntity;
 import br.dev.nathan.adocao_pets.entities.RacaEntity;
@@ -28,7 +29,7 @@ public class PetService {
         this.racaRepository = racaRepository;
     }
 
-    private PetEntity transformarDTOEmEntity(PetDTO dto) {
+    private PetEntity transformarDTOEmEntity(PetRequest dto) {
         OngEntity ong = ongRepository.findById(dto.getIdOng())
             .orElseThrow(() -> new OngInexistenteException());
 
@@ -36,7 +37,7 @@ public class PetService {
             .orElseThrow(() -> new RacaInexistenteException());
 
         return new PetEntity(
-            dto.getId(),
+            null,
             dto.getNome(),
             dto.getFotoUrl(),
             dto.getIdadeAproximada(),
@@ -48,25 +49,25 @@ public class PetService {
         );
     }
 
-    public List<PetDTO> listarTudo() {
+    public List<PetResponse> listarTudo() {
         return petRepository.findAll()
             .stream()
-            .map(x -> new PetDTO(x))
+            .map(x -> new PetResponse(x))
             .toList();
     }
 
-    public PetDTO buscarPorId(Integer id) {
-        return new PetDTO(
+    public PetResponse buscarPorId(Integer id) {
+        return new PetResponse(
             petRepository.findById(id)
                 .orElseThrow(() -> new PetNaoEncontradoException())
         );
     }
 
-    public void inserir(PetDTO dto) {
+    public void inserir(PetRequest dto) {
         petRepository.save(transformarDTOEmEntity(dto));
     }
 
-    public void atualizar(PetDTO dto, Integer id) {
+    public void atualizar(PetRequest dto, Integer id) {
         if (petRepository.existsById(id)) {
             PetEntity entity = transformarDTOEmEntity(dto);
             entity.setId(id);

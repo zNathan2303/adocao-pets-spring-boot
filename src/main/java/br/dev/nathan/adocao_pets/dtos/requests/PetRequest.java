@@ -1,6 +1,5 @@
-package br.dev.nathan.adocao_pets.dtos;
+package br.dev.nathan.adocao_pets.dtos.requests;
 
-import br.dev.nathan.adocao_pets.entities.PetEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,11 +10,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Schema(name = "Pet")
-public class PetDTO {
-
-    private Integer id;
+@Schema(name = "Pet - Request")
+public class PetRequest {
 
     @NotBlank(message = "Nome inválido!")
     @Size(max = 50, message = "O nome pode ter no máximo 50 caracteres!")
@@ -45,15 +41,4 @@ public class PetDTO {
     @NotNull(message = "Id da ong inválido!")
     private Integer idOng;
 
-    public PetDTO(PetEntity entity) {
-        this.id = entity.getId();
-        this.nome = entity.getNome();
-        this.fotoUrl = entity.getFotoUrl();
-        this.idadeAproximada = entity.getIdadeAproximada();
-        this.porte = entity.getPorte();
-        this.sexo = entity.getSexo();
-        this.descricao = entity.getDescricao();
-        this.idRaca = entity.getRaca().getId();
-        this.idOng = entity.getOng().getId();
-    }
 }

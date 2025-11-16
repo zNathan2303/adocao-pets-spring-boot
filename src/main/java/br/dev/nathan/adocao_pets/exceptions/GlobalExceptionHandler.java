@@ -1,6 +1,6 @@
 package br.dev.nathan.adocao_pets.exceptions;
 
-import br.dev.nathan.adocao_pets.dtos.errors.DefaultErrorResponse;
+import br.dev.nathan.adocao_pets.dtos.responses.messages.DefaultErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;

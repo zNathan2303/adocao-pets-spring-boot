@@ -1,6 +1,5 @@
-package br.dev.nathan.adocao_pets.dtos;
+package br.dev.nathan.adocao_pets.dtos.requests;
 
-import br.dev.nathan.adocao_pets.entities.EnderecoOngEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,11 +10,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Schema(name = "Endereço da ONG")
-public class EnderecoOngDTO {
-
-    private Integer id;
+@Schema(name = "Endereço da ONG - Request")
+public class EnderecoOngRequest {
 
     @NotBlank(message = "Logradouro inválido!")
     @Size(max = 200, message = "O logradouro pode ter no máximo 200 caracteres!")
@@ -44,14 +40,4 @@ public class EnderecoOngDTO {
     @NotNull(message = "Id da ONG inválido!")
     private Integer idOng;
 
-    public EnderecoOngDTO(EnderecoOngEntity entity) {
-        this.id = entity.getId();
-        this.logradouro = entity.getLogradouro();
-        this.numero = entity.getNumero();
-        this.bairro = entity.getBairro();
-        this.cidade = entity.getCidade();
-        this.estado = entity.getEstado();
-        this.inscricaoMunicipal = entity.getInscricaoMunicipal();
-        this.idOng = entity.getOng().getId();
-    }
 }

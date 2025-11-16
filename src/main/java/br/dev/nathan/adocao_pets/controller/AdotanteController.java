@@ -1,6 +1,8 @@
 package br.dev.nathan.adocao_pets.controller;
 
-import br.dev.nathan.adocao_pets.dtos.AdotanteDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.AdotanteRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.AdotanteResponse;
+import br.dev.nathan.adocao_pets.dtos.responses.EnderecoAdotanteResponse;
 import br.dev.nathan.adocao_pets.services.AdotanteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,6 +28,19 @@ public class AdotanteController {
         this.service = service;
     }
 
+    @GetMapping("/{id}/endereco")
+    @Operation(
+        summary = "Listar endereços de um adotante",
+        description = "Listar todos os endereços cadastrados de um adotante."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Sucesso!"),
+        @ApiResponse(responseCode = "404", description = "Adotante não encontrado!", content = @Content())
+    })
+    public ResponseEntity<List<EnderecoAdotanteResponse>> listarTodosEnderecosDeUmAdotante(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.listarEnderecosDeUmAdotante(id));
+    }
+
     @GetMapping
     @Operation(
         summary = "Listar adotantes",
@@ -34,7 +49,7 @@ public class AdotanteController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Sucesso!")
     })
-    public ResponseEntity<List<AdotanteDTO>> listarTodosOsAdotantes() {
+    public ResponseEntity<List<AdotanteResponse>> listarTodosOsAdotantes() {
         return ResponseEntity.ok(service.listarTudo());
     }
 
@@ -47,7 +62,7 @@ public class AdotanteController {
         @ApiResponse(responseCode = "200", description = "Sucesso!"),
         @ApiResponse(responseCode = "404", description = "Adotante não encontrado!", content = @Content())
     })
-    public ResponseEntity<AdotanteDTO> buscarAdotantePorId(@PathVariable Integer id) {
+    public ResponseEntity<AdotanteResponse> buscarAdotantePorId(@PathVariable Integer id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
@@ -62,7 +77,7 @@ public class AdotanteController {
             description = "O corpo da requisição está mal formulado " +
                 "ou algum dos campos está inválido!")
     })
-    public ResponseEntity<Void> inserirAdotante(@Valid @RequestBody AdotanteDTO dto) {
+    public ResponseEntity<Void> inserirAdotante(@Valid @RequestBody AdotanteRequest dto) {
         service.inserir(dto);
         return ResponseEntity.status(201).build();
     }
@@ -79,7 +94,7 @@ public class AdotanteController {
                 "ou algum dos campos está inválido!"),
         @ApiResponse(responseCode = "404", description = "Adotante não encontrado!")
     })
-    public ResponseEntity<Void> atualizarAdotante(@Valid @RequestBody AdotanteDTO dto,
+    public ResponseEntity<Void> atualizarAdotante(@Valid @RequestBody AdotanteRequest dto,
                                                   @PathVariable Integer id) {
         service.atualizar(dto, id);
         return ResponseEntity.status(200).build();

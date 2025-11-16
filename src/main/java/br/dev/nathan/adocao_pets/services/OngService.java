@@ -1,8 +1,9 @@
 package br.dev.nathan.adocao_pets.services;
 
-import br.dev.nathan.adocao_pets.dtos.EnderecoOngDTO;
-import br.dev.nathan.adocao_pets.dtos.OngDTO;
-import br.dev.nathan.adocao_pets.dtos.PetDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.OngRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.EnderecoOngResponse;
+import br.dev.nathan.adocao_pets.dtos.responses.OngResponse;
+import br.dev.nathan.adocao_pets.dtos.responses.PetResponse;
 import br.dev.nathan.adocao_pets.entities.OngEntity;
 import br.dev.nathan.adocao_pets.exceptions.OngNaoEncontradaException;
 import br.dev.nathan.adocao_pets.repositories.OngRepository;
@@ -23,30 +24,30 @@ public class OngService {
     * OPERAÇÕES PERSONALIZADAS
     * */
 
-    public List<OngDTO> listarOngsAtivas() {
+    public List<OngResponse> listarOngsAtivas() {
         return repository.listarOngsAtivas()
             .stream()
-            .map(x -> new OngDTO(x))
+            .map(x -> new OngResponse(x))
             .toList();
     }
 
-    public List<PetDTO> listarPetsDeUmaOng(Integer ongId) {
+    public List<PetResponse> listarPetsDeUmaOng(Integer ongId) {
         if (!repository.existsById(ongId))
             throw new OngNaoEncontradaException();
 
         return repository.listarPetsDeUmaOng(ongId)
             .stream()
-            .map(x -> new PetDTO(x))
+            .map(x -> new PetResponse(x))
             .toList();
     }
 
-    public List<EnderecoOngDTO> listarEnderecosDeUmaOng(Integer ongId) {
+    public List<EnderecoOngResponse> listarEnderecosDeUmaOng(Integer ongId) {
         if (!repository.existsById(ongId))
             throw new OngNaoEncontradaException();
 
         return repository.listarEnderecosDeUmaOng(ongId)
             .stream()
-            .map(x -> new EnderecoOngDTO(x))
+            .map(x -> new EnderecoOngResponse(x))
             .toList();
     }
 
@@ -54,25 +55,25 @@ public class OngService {
     * OPERAÇÕES CRUD
     * */
 
-    public List<OngDTO> listarTudo() {
+    public List<OngResponse> listarTudo() {
         return repository.findAll()
             .stream()
-            .map(x -> new OngDTO(x))
+            .map(x -> new OngResponse(x))
             .toList();
     }
 
-    public OngDTO buscarPorId(Integer id) {
-        return new OngDTO(
+    public OngResponse buscarPorId(Integer id) {
+        return new OngResponse(
             repository.findById(id)
                 .orElseThrow(() -> new OngNaoEncontradaException())
         );
     }
 
-    public void inserir(OngDTO dto) {
+    public void inserir(OngRequest dto) {
         repository.save(new OngEntity(dto));
     }
 
-    public void atualizar(OngDTO dto, Integer id) {
+    public void atualizar(OngRequest dto, Integer id) {
         if (repository.existsById(id)) {
             OngEntity entity = new OngEntity(dto);
             entity.setId(id);

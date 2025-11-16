@@ -1,6 +1,7 @@
 package br.dev.nathan.adocao_pets.services;
 
-import br.dev.nathan.adocao_pets.dtos.EspecieDTO;
+import br.dev.nathan.adocao_pets.dtos.requests.EspecieRequest;
+import br.dev.nathan.adocao_pets.dtos.responses.EspecieResponse;
 import br.dev.nathan.adocao_pets.entities.EspecieEntity;
 import br.dev.nathan.adocao_pets.exceptions.EspecieNaoEncontradaException;
 import br.dev.nathan.adocao_pets.repositories.EspecieRepository;
@@ -17,25 +18,25 @@ public class EspecieService {
         this.repository = repository;
     }
 
-    public List<EspecieDTO> listarTudo() {
+    public List<EspecieResponse> listarTudo() {
         return repository.findAll()
             .stream()
-            .map(x -> new EspecieDTO(x))
+            .map(x -> new EspecieResponse(x))
             .toList();
     }
 
-    public EspecieDTO buscarPorId(Integer id) {
-        return new EspecieDTO(
+    public EspecieResponse buscarPorId(Integer id) {
+        return new EspecieResponse(
             repository.findById(id)
                 .orElseThrow(() -> new EspecieNaoEncontradaException())
         );
     }
     
-    public void inserir(EspecieDTO dto) {
+    public void inserir(EspecieRequest dto) {
         repository.save(new EspecieEntity(dto));
     }
 
-    public void atualizar(EspecieDTO dto, Integer id) {
+    public void atualizar(EspecieRequest dto, Integer id) {
         if (repository.existsById(id)) {
             EspecieEntity entity = new EspecieEntity(dto);
             entity.setId(id);
