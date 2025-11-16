@@ -18,20 +18,31 @@ Este projeto é uma API que gerencia um sistema de adoção de pets, onde ONGs i
 
 ## Executando o Projeto
 
-### Passos
-1. Clone esse repositório:
+1. Clone o repositório
 ```bash
 git clone https://github.com/zNathan2303/adocao-pets-spring-boot
 ```
-2. Coloque as credenciais do seu usuário MySQL no *application.properties*:
+2. Configure as credenciais do MySQL
+
+Edite o arquivo *src/main/resources/application.properties* e ajuste para o seu ambiente:
 ```properties
 spring.datasource.username=root
 spring.datasource.password=root
 ```
-3. Crie um banco de dados no seu MySQL chamado db_adocao_pets.
-4. Inicie o projeto e as tabelas serão criadas automáticamente e será inserido os dados do *data.sql*.
-5. Inicie o projeto e teste os endpoints em: http://localhost:8080/swagger-ui/index.html#/
+3. Crie o banco de dados
 
+No MySQL, execute:
+
+```sql
+CREATE DATABASE db_adocao_pets;
+```
+
+4. Inicie o projeto
+
+Execute o projeto e as tabelas serão criadas automaticamente.
+O arquivo *data.sql* irá popular o banco com dados iniciais.
+
+5. Teste os endpoints em: http://localhost:8080/swagger-ui/index.html#/
 
 ## Autor
 [Nathan da Silva Costa](<https://www.linkedin.com/in/nathandasilvacosta/>)
